@@ -24,8 +24,8 @@ class StockDataLoader(object):
 
     def __init__(self):
 
-        self.SOURCE_URL     = 'https://www.kaggle.com/camnugent/sandp500/downloads/'
-        self.WORK_DIRECTORY = os.getcwd() + '/input'
+        self.SOURCE_URL     = 'https://github.com/CNuge/kaggle-code/raw/master/stock_data/'
+        self.WORK_DIRECTORY = os.getcwd() + '/data'
 
         self.DAY_SIZE = 3
         self.file_path = ''
@@ -78,8 +78,7 @@ class StockDataLoader(object):
         tf.logging.info('[Input_fn] download if the files does not exist')
 
         self.file_path = self._download(filename=inputfilename)
-        data = pd.read_csv("./input/all_stocks_5yr.csv")
-        # data = pd.read_csv(self.file_path)
+        data = pd.read_csv(self.file_path)
         data = data[data['Name']=='MMM'].close
         data_numpy, label_numpy = self._processData(data)
 
