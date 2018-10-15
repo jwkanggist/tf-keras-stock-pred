@@ -25,7 +25,7 @@ def predict(dataloader,trainconfig_worker):
 
     mse = utils.cal_mse(y_test, y_pred)
     mae = utils.cal_mae(y_test, y_pred)
-    print("ACC MSE : {0:.6f}".format(mse))
+    print("ACC RMSE : {0:.6f}".format(mse))
     print("ACC MAE : {}".format(mae))
 
     return y_test, y_pred

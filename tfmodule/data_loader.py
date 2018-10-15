@@ -18,13 +18,17 @@ from sklearn.preprocessing import MinMaxScaler
 class FileManager(object):
 
     def __init__(self):
-        self.filename = 'all_stocks_5yr.csv'
+        self.filename = 'all_stocks_5yr.csv' # S&P 500
+        # self.filename = 'prices.csv' # YAHOO
+        # self.filename = 'trainset.csv' # GOOGLE
 
 class StockDataLoader(object):
 
     def __init__(self):
 
-        self.SOURCE_URL     = 'https://github.com/CNuge/kaggle-code/raw/master/stock_data/'
+        self.SOURCE_URL     = 'https://github.com/CNuge/kaggle-code/raw/master/stock_data/' # S&P 500
+        # self.SOURCE_URL     = 'https://www.kaggle.com/dgawlik/nyse/downloads/prices.csv/3' # YAHOO
+        # self.SOURCE_URL     = 'https://www.kaggle.com/ptheru/googledta/downloads/trainset.csv/1' # GOOGLE
         self.WORK_DIRECTORY = os.getcwd() + '/data'
 
         self.DAY_SIZE = 3
@@ -62,7 +66,7 @@ class StockDataLoader(object):
             tf.gfile.MakeDirs(self.WORK_DIRECTORY)
             tf.logging.info(" %s is not exist" % self.WORK_DIRECTORY)
 
-        filepath = os.path.join(self.WORK_DIRECTORY, filename)
+        filepath = os.path.join(self.WORK_DIRECTORY, filename.split('.')[0])
 
         tf.logging.info('filepath = %s' % filepath)
         tf.logging.info(self.SOURCE_URL+ filename+"/4")

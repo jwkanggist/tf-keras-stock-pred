@@ -5,8 +5,8 @@ import numpy as np
 
 
 def cal_mse(gt, pred):
-    mse = np.mean((gt - pred) ** 2)
-    return mse
+    rmse = np.sqrt(np.mean((gt - pred) ** 2))
+    return rmse
 
 def cal_mae(gt, pred):
     mae = 100/len(gt) * np.sum((gt - pred)/gt)
