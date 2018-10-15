@@ -7,7 +7,8 @@ model_config = {
 
 model_chout_num = \
 {
-    'u1':1
+    'u1':64,
+    'u2':64
 }
 
 

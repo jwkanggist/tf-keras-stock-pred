@@ -31,21 +31,26 @@ class StockDataLoader(object):
         self.file_path = ''
 
 
-    def _processData(self, data):
-        scl = MinMaxScaler()
-        print(pd.__version__)
+    def _processData(self, data, type=['close'], train=False):
+        data = data[type].values
 
         # if pd.__version__ < '0.23':
         #     cl = data.reshape(data.shape[0],1)
         # elif pd.__version__ >= '0.23':
 
-        data = data.as_matrix()
-        data = data.reshape(data.shape[0],1)
-        data = scl.fit_transform(data)
+        # data = data.as_matrix()
+        # data = data.reshape(data.shape[0],1)
+
+        if(train==True):
+            scl = MinMaxScaler()
+            data = scl.fit_transform(data)
 
         X, Y = [], []
         for i in range(len(data)-self.DAY_SIZE-1):
-            X.append(data[i:(i+self.DAY_SIZE), 0])
+            if len(type) > 2:
+                X.append(data[i:(i+self.DAY_SIZE)])
+            else:
+                X.append(data[i:(i+self.DAY_SIZE), 0])
             Y.append(data[(i+self.DAY_SIZE), 0])
         return np.array(X), np.array(Y)
 
@@ -73,13 +78,15 @@ class StockDataLoader(object):
         return filepath
 
 
-    def import_data(self,inputfilename):
+    def import_data(self,inputfilename, stock='MMM', train=False):
 
         tf.logging.info('[Input_fn] download if the files does not exist')
 
         self.file_path = self._download(filename=inputfilename)
         data = pd.read_csv(self.file_path)
-        data = data[data['Name']=='MMM'].close
-        data_numpy, label_numpy = self._processData(data)
+        data = data[data['Name']==stock]
+        # data_numpy, label_numpy = self._processData(data, type=['close', 'high', 'low'], train=train)
+        data_numpy, label_numpy = self._processData(data, type=['close'], train=train)
 
         return data_numpy, label_numpy
+
