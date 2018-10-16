@@ -72,7 +72,7 @@ class StockDataLoader(object):
         tf.logging.info(self.SOURCE_URL+ filename+"/4")
 
         if not tf.gfile.Exists(filepath):
-            filepath, _ = urllib.request.urlretrieve(self.SOURCE_URL+ filename, filepath)
+            filepath, _ = urllib.urlretrieve(self.SOURCE_URL+ filename, filepath)
             with tf.gfile.GFile(filepath) as f:
                 size = f.size()
                 tf.logging.info('Successfully downloaded', filename, size, 'bytes.')
