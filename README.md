@@ -1,10 +1,13 @@
-Readme for RNN time prediction in tf.keras
+Readme for S&P500 stock prediction in tf.keras
 ==================================
 - Final update: 2018 Oct 
 - All right reserved @  Chanhee Jeong and Jaewook Kang 2018
 
 
 ## About
+![alt text](https://github.com/jwkanggist/tf-keras-rnn-time-pred/blob/master/images/compare.png)
+
+
 This repository is to provide a toy stock price prediction in `tf.keras`.
 For the dataset, we have used the 5 years (`1255 days`) [S&P500 data](https://github.com/CNuge/kaggle-code/raw/master/stock_data/),
 where 
