@@ -38,7 +38,7 @@ Hidden state of each cell H:
 ## How to Run
 Training
 ```bash
-python ./tf_module/trainer.py
+python ./tfmodule/trainer.py
 ```
 
 Inference
