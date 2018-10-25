@@ -1,4 +1,4 @@
-Readme for S&P500 stock prediction in tf.keras
+Readme for S&P500 stock prediction tutorial in tf.keras
 ==================================
 - Final update: 2018 Oct 
 - All right reserved @  Chanhee Jeong and Jaewook Kang 2018
