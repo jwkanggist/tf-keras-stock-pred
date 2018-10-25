@@ -1,11 +1,11 @@
-Readme for S&P500 stock prediction tutorial in tf.keras
+Tutorial for Stock Prediction in tf.keras
 ==================================
 - Final update: 2018 Oct 
 - All right reserved @  Chanhee Jeong and Jaewook Kang 2018
 
 
 ## About
-![alt text](https://github.com/jwkanggist/tf-keras-rnn-time-pred/blob/master/images/compare.png)
+![alt text](https://github.com/jwkanggist/tf-keras-rnn-time-pred/blob/develop/images/compare.png)
 
 
 This repository is to provide a toy stock price prediction in `tf.keras`.
@@ -20,7 +20,9 @@ Various options are available to compose the layer from  `tf.keras`:
 - LSTM model: `tf.keras.layers.LSTM` 
 - GRU model:  `tf.keras.layers.GRU`
 
-where the model shape in `the training` as 
+where the model shape in `the training` as
+
+```
 Input X: 
 - A sequence of the `close value` in past 3-days 
 - X: [X_0:X_1003] has its shape as [1004 x 3 ] where the input of each  cell  is X_t = [1 x 3]
@@ -31,7 +33,7 @@ Output Y:
 
 Hidden state of each cell H:
 - H_t denote the hidden state of each RNN cell which has its shape [64 x 1]
-
+```
 
 ## How to Run
 Training
@@ -59,7 +61,6 @@ python ./tfmodule/eval.py
 ```
 
 ### Compiler/Interface Dependencies
-> 아래를 적절하게 수정
 - Tensorflow >=1.9
 - Python2 <= 2.7.12
 - Python3 <= 3.6.0
