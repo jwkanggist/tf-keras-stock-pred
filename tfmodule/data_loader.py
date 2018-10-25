@@ -35,8 +35,8 @@ class StockDataLoader(object):
         self.file_path = ''
 
 
-    def _processData(self, data, type=['close'], train=False):
-        data = data[type].values
+    def _processData(self, _orig_data, type=['close'], train=False):
+        orig_data = _orig_data[type].values
 
         # if pd.__version__ < '0.23':
         #     cl = data.reshape(data.shape[0],1)
@@ -46,9 +46,17 @@ class StockDataLoader(object):
         # data = data.reshape(data.shape[0],1)
 
         if(train==True):
+            # normalization scaling to [0,1] (default)
             scl = MinMaxScaler()
-            data = scl.fit_transform(data)
+            data = scl.fit_transform(orig_data)
+        else:
+            data = orig_data
 
+        '''
+            * data to (X,Y) conversion
+            - converation Nx1 vector to NxDAY_SIZE vector
+            - [[1],[2],[3],[4],[5],[6]] --> [[1,2,3],[2,3,4],[3,4,5],....] 
+        '''
         X, Y = [], []
         for i in range(len(data)-self.DAY_SIZE-1):
             if len(type) > 2:
@@ -67,7 +75,7 @@ class StockDataLoader(object):
             tf.logging.info(" %s is not exist" % self.WORK_DIRECTORY)
 
         filepath = os.path.join(self.WORK_DIRECTORY, filename.split('.')[0])
-
+        filepath = filepath + '.csv'
         tf.logging.info('filepath = %s' % filepath)
         tf.logging.info(self.SOURCE_URL+ filename+"/4")
 
@@ -89,7 +97,11 @@ class StockDataLoader(object):
         self.file_path = self._download(filename=inputfilename)
         data = pd.read_csv(self.file_path)
         data = data[data['Name']==stock]
+
+        # The case to use 'close', 'high' 'low'
         # data_numpy, label_numpy = self._processData(data, type=['close', 'high', 'low'], train=train)
+
+        # the Case to use only 'close'
         data_numpy, label_numpy = self._processData(data, type=['close'], train=train)
 
         return data_numpy, label_numpy

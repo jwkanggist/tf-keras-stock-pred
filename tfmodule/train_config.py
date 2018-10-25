@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import tensorflow as tf
 
 class TrainConfig(object):
     def __init__(self):
@@ -13,5 +14,8 @@ class TrainConfig(object):
         self.optimizer       = 'adam'
         self.loss_fn         = 'mse'
 
-        self.save_weight_name= 'save_weight_1.h5'
+        saved_model_folder_path = './saved_model'
+        if not tf.gfile.Exists(saved_model_folder_path):
+            tf.gfile.MakeDirs(saved_model_folder_path)
+        self.save_weight_name= saved_model_folder_path + '/save_weight_1.h5'
 

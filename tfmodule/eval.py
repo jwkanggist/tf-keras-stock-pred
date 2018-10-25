@@ -8,14 +8,22 @@ import tensorflow as tf
 from data_loader import StockDataLoader
 from data_loader import FileManager
 from train_config import TrainConfig
+from model_config import model_config
 import utils
 
 def predict(dataloader,trainconfig_worker):
     X, y = dataloader.import_data(fm.filename, train=True)
     _X, _y = dataloader.import_data(fm.filename, train=False)
-    X_train,X_test = X[:int(X.shape[0] * trainconfig_worker.train_data_size)],X[int(X.shape[0] * trainconfig_worker.test_data_size):]
-    y_train,y_test = y[:int(y.shape[0] * trainconfig_worker.train_data_size)],y[int(y.shape[0] * trainconfig_worker.test_data_size):]
-    X_test = X_test.reshape((X_test.shape[0],X_test.shape[1],trainconfig_worker.train_input_size))
+
+    X_train,X_test = X[:int(X.shape[0] * trainconfig_worker.train_data_size)],\
+                     X[int(X.shape[0] * trainconfig_worker.test_data_size):]
+
+    y_train,y_test = y[:int(y.shape[0] * trainconfig_worker.train_data_size)],\
+                     y[int(y.shape[0] * trainconfig_worker.test_data_size):]
+
+    X_test = X_test.reshape((X_test.shape[0],
+                             X_test.shape[1],
+                             trainconfig_worker.train_input_size))
 
     model = tf.keras.models.load_model(trainconfig_worker.save_weight_name)
     y_pred = model.predict(X_test)
@@ -28,7 +36,7 @@ def predict(dataloader,trainconfig_worker):
     print("ACC RMSE : {0:.6f}".format(mse))
     print("ACC MAE : {}".format(mae))
 
-    return y_test, y_pred
+    return X_test,y_test, y_pred,mse
 
 
 if __name__ == '__main__':
@@ -40,5 +48,7 @@ if __name__ == '__main__':
     dataloader = StockDataLoader()
 
     # model tranining
-    gt, pred = predict(dataloader=dataloader, trainconfig_worker=trainconfig_worker)
-    utils.show(gt, pred)
+    input_x, gt_y, pred_y,mse = predict(dataloader=dataloader, trainconfig_worker=trainconfig_worker)
+    utils.show_as_plot(gt_y, pred_y,
+                       model_type=model_config['model_type'],
+                       mse = mse)

@@ -12,8 +12,11 @@ def cal_mae(gt, pred):
     mae = 100/len(gt) * np.sum((gt - pred)/gt)
     return mae
 
-def show(gt, pred):
-    plt.plot(gt, color='r', label='Ground Truth')
-    plt.plot(pred, color='b', label='Prediction')
+def show_as_plot(gt_y, pred_y,model_type,mse):
+    plt.plot(gt_y, color='r', label='Ground Truth Y')
+    plt.plot(pred_y, color='b', label='Prediction Y')
     plt.legend(loc=2)
+    plt.ylabel('The closing value of Stock')
+    plt.xlabel('Days')
+    plt.title('%s based Stock prection of S&P500 data: MSE= %1.4f' % (model_type,mse))
     plt.show()

@@ -2,7 +2,8 @@
 
 model_config = {
     'optimizer': 'adam',
-    'loss': 'mse'
+    'loss': 'mse',
+    'model_type': 'gru'
 }
 
 model_chout_num = \
